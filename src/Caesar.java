@@ -115,12 +115,12 @@ public class Caesar {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < source.length(); i++) {
             char letter = charArray[i];
-            int index_in_alphabet = ALPHABET.indexOf(letter);
-            char cyphered_letter = letter;
-            if (index_in_alphabet != -1) {
-                cyphered_letter = ALPHABET.get(((ALPHABET.size() + index_in_alphabet + key) % ALPHABET.size()));
+            int indexInAlphabet = ALPHABET.indexOf(letter);
+            char cypheredLetter = letter;
+            if (indexInAlphabet != -1) {
+                cypheredLetter = ALPHABET.get(((ALPHABET.size() + indexInAlphabet + key) % ALPHABET.size()));
             }
-            stringBuilder.append(cyphered_letter);
+            stringBuilder.append(cypheredLetter);
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(target));
         writer.write(stringBuilder.toString());
@@ -132,12 +132,12 @@ public class Caesar {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < source.length(); i++) {
             char letter = charArray[i];
-            int index_in_alphabet = ALPHABET.indexOf(letter);
-            char cyphered_letter = letter;
-            if (index_in_alphabet != -1) {
-                cyphered_letter = ALPHABET.get(Math.floorMod((index_in_alphabet - key), ALPHABET.size()));
+            int indexInAlphabet = ALPHABET.indexOf(letter);
+            char cypheredLetter = letter;
+            if (indexInAlphabet != -1) {
+                cypheredLetter = ALPHABET.get(Math.floorMod((indexInAlphabet - key), ALPHABET.size()));
             }
-            stringBuilder.append(cyphered_letter);
+            stringBuilder.append(cypheredLetter);
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(target));
         writer.write(stringBuilder.toString());
@@ -148,54 +148,54 @@ public class Caesar {
         char[] charArray = source.toCharArray();
         int key = -20;
         while (key <= source.length()) {
-            StringBuilder inner_string_builder = new StringBuilder();
+            StringBuilder innerStringBuilder = new StringBuilder();
             for (int i = 0; i < source.length(); i++) {
                 char letter = charArray[i];
-                int index_in_alphabet = ALPHABET.indexOf(letter);
-                int newindex = Math.floorMod((index_in_alphabet - key), ALPHABET.size());
-                char cyphered_letter = letter;
-                if (index_in_alphabet != -1) {
-                    cyphered_letter = ALPHABET.get(newindex);
+                int indexInAlphabet = ALPHABET.indexOf(letter);
+                int newindex = Math.floorMod((indexInAlphabet - key), ALPHABET.size());
+                char cypheredLetter = letter;
+                if (indexInAlphabet != -1) {
+                    cypheredLetter = ALPHABET.get(newindex);
                 }
-                inner_string_builder.append(cyphered_letter);
+                innerStringBuilder.append(cypheredLetter);
             }
             Pattern stringPattern = Pattern.compile("(,\\s).+(\\.\\s)");
-            Matcher m = stringPattern.matcher(inner_string_builder.toString());
-            if (m.find() && inner_string_builder.toString().contains("horror")) {
+            Matcher m = stringPattern.matcher(innerStringBuilder.toString());
+            if (m.find() && innerStringBuilder.toString().contains("horror")) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(target));
-                writer.write(inner_string_builder.toString());
+                writer.write(innerStringBuilder.toString());
                 writer.close();
             }
             key++;
         }
     }
 
-    public static void statistics(String source_text, String text, String target) throws IOException {
-        char[] all_letters_source = source_text.toCharArray();
-        Stream<Character> charStreamSource = new String(all_letters_source).chars().mapToObj(i -> (char) i);
-        Map<Character, Long> chars_source_text = charStreamSource
+    public static void statistics(String sourceText, String text, String target) throws IOException {
+        char[] allLettersSource = sourceText.toCharArray();
+        Stream<Character> charStreamSource = new String(allLettersSource).chars().mapToObj(i -> (char) i);
+        Map<Character, Long> charsSourceText = charStreamSource
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        char[] all_letters_text = text.toCharArray();
-        Stream<Character> charStreamText = new String(all_letters_text).chars().mapToObj(i -> (char) i);
-        Map<Character, Long> chars_text = charStreamText
+        char[] allLettersText = text.toCharArray();
+        Stream<Character> charStreamText = new String(allLettersText).chars().mapToObj(i -> (char) i);
+        Map<Character, Long> charsText = charStreamText
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        long maxValueIn_chars_source_text = (Collections.max(chars_source_text.values()));
-        Character maxKey_source = 'a';
-        for (Map.Entry<Character, Long> entry : chars_source_text.entrySet()) {
-            if (entry.getValue() == maxValueIn_chars_source_text) {
-                maxKey_source = entry.getKey();
+        long maxValueInCharsSourceText = (Collections.max(charsSourceText.values()));
+        Character maxKeySource = 'a';
+        for (Map.Entry<Character, Long> entry : charsSourceText.entrySet()) {
+            if (entry.getValue() == maxValueInCharsSourceText) {
+                maxKeySource = entry.getKey();
             }
         }
-        long maxValueIn_chars_text = (Collections.max(chars_text.values()));
-        Character maxKey_text = 'a';
-        for (Map.Entry<Character, Long> entry : chars_text.entrySet()) {
-            if (entry.getValue() == maxValueIn_chars_text) {
-                maxKey_text = entry.getKey();
+        long maxValueInCharsText = (Collections.max(charsText.values()));
+        Character maxKeyText = 'a';
+        for (Map.Entry<Character, Long> entry : charsText.entrySet()) {
+            if (entry.getValue() == maxValueInCharsText) {
+                maxKeyText = entry.getKey();
             }
         }
-        int index_in_alphabet_source_max = ALPHABET.indexOf(maxKey_source);
-        int index_in_alphabet_text_max = ALPHABET.indexOf(maxKey_text);
-        int key = (index_in_alphabet_text_max - index_in_alphabet_source_max);
+        int indexInAlphabetSourceMax = ALPHABET.indexOf(maxKeySource);
+        int indexInAlphabetTextMax = ALPHABET.indexOf(maxKeyText);
+        int key = (indexInAlphabetTextMax - indexInAlphabetSourceMax);
         decipher(text, key, target);
     }
 
