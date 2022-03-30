@@ -18,24 +18,30 @@ public class Caesar {
         menu();
     }
 
-    public static void input() {
+    /**
+     * The user should input an integer key to be used in methods cypher() and decipher()
+     */
+    public static void keyInput() {
         System.out.println("You should input an integer in the range of -20 to 20");
         try {
             Scanner scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
                 key = scanner.nextInt();
                 if (key > 20 || key < -20) {
-                    input();
+                    keyInput();
                 }
             } else {
                 throw new Exception();
             }
         } catch (Exception e) {
             System.out.println("You should input an integer in the range of -20 to 20, restarting the program");
-            input();
+            keyInput();
         }
     }
 
+    /**
+     * Main menu where user chooses operations with files
+     */
     public static void menu() {
         System.out.println("Choose an action");
         System.out.println("1 to cypher");
@@ -50,7 +56,7 @@ public class Caesar {
                     String sourceCypher = scanner.next();
                     System.out.println("Path to the target file: ");
                     String targetCypher = scanner.next();
-                    input();
+                    keyInput();
                     String readToCypher=Objects.requireNonNull(read(sourceCypher));
                     cypher(readToCypher, key, targetCypher);
                 }
@@ -59,7 +65,7 @@ public class Caesar {
                     String sourceDecypher = scanner.next();
                     System.out.println("Path to the target file: ");
                     String targetDecypher = scanner.next();
-                    input();
+                    keyInput();
                     String readToDecipher = Objects.requireNonNull(read(sourceDecypher));
                     decipher(readToDecipher, key, targetDecypher);
                 }
@@ -94,6 +100,11 @@ public class Caesar {
         }
     }
 
+    /**
+     * This method is uded to generate a string that contains all data from the file to be cyphered or deciphered later
+     * @param path The path to a file to read
+     * @return Returns a string that contains all symbols from the text including \n
+     */
     public static String read(String path) {
         StringBuilder text = new StringBuilder();
         try (FileReader in = new FileReader(path);
@@ -110,6 +121,12 @@ public class Caesar {
         return null;
     }
 
+    /**
+     * Method that cyphers data using the Caesar's cypher
+     * @param source String that contains data from a source file
+     * @param key The integer key to be used in the Caesar's cipher
+     * @param target String that contains a path to the target file to write the cyphered data
+     */
     public static void cypher(String source, int key, String target) throws IOException {
         char[] charArray = source.toCharArray();
         StringBuilder stringBuilder = new StringBuilder();
@@ -127,6 +144,12 @@ public class Caesar {
         writer.close();
     }
 
+    /**
+     * Method that deciphers data using the Caesar's cypher
+     * @param source String that contains data from a  cyphered source file
+     * @param key The integer key to be used in the Caesar's cipher
+     * @param target String that contains a path to the target file to write the deciphered data
+     */
     public static void decipher(String source, int key, String target) throws IOException {
         char[] charArray = source.toCharArray();
         StringBuilder stringBuilder = new StringBuilder();
@@ -144,6 +167,11 @@ public class Caesar {
         writer.close();
     }
 
+    /**
+     * Method that deciphers data using Caesar's cypher by means of brute force
+     * @param source String that contains data from a  cyphered source file
+     * @param target String that contains a path to the target file to write the deciphered data
+     */
     public static void bruteForce(String source, String target) throws IOException {
         char[] charArray = source.toCharArray();
         int key = -20;
@@ -170,6 +198,12 @@ public class Caesar {
         }
     }
 
+    /**
+     * Method that deciphers data using Caesar's cypher by means of statistical analysis
+     * @param sourceText String that contains data from a file to analyse
+     * @param text String that contains data from a  cyphered source file
+     * @param target String that contains a path to the target file to write the deciphered data
+     */
     public static void statistics(String sourceText, String text, String target) throws IOException {
         char[] allLettersSource = sourceText.toCharArray();
         Stream<Character> charStreamSource = new String(allLettersSource).chars().mapToObj(i -> (char) i);
