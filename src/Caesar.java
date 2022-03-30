@@ -101,7 +101,7 @@ public class Caesar {
     }
 
     /**
-     * This method is uded to generate a string that contains all data from the file to be cyphered or deciphered later
+     * This method is used to generate a string that contains all data from the file to be cyphered or deciphered later
      * @param path The path to a file to read
      * @return Returns a string that contains all symbols from the text including \n
      */
@@ -122,6 +122,16 @@ public class Caesar {
     }
 
     /**
+     * Method to write data to chosen file path
+     * @param data String that contains data
+     * @param target String that contains a path to the target file to write the data
+     */
+    public static void writeToFile(String data, String target) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(target));
+        writer.write(data);
+        writer.close();
+    }
+    /**
      * Method that cyphers data using the Caesar's cypher
      * @param source String that contains data from a source file
      * @param key The integer key to be used in the Caesar's cipher
@@ -139,9 +149,7 @@ public class Caesar {
             }
             stringBuilder.append(cypheredLetter);
         }
-        BufferedWriter writer = new BufferedWriter(new FileWriter(target));
-        writer.write(stringBuilder.toString());
-        writer.close();
+        writeToFile(stringBuilder.toString(),target);
     }
 
     /**
@@ -162,9 +170,7 @@ public class Caesar {
             }
             stringBuilder.append(cypheredLetter);
         }
-        BufferedWriter writer = new BufferedWriter(new FileWriter(target));
-        writer.write(stringBuilder.toString());
-        writer.close();
+        writeToFile(stringBuilder.toString(),target);
     }
 
     /**
@@ -190,9 +196,7 @@ public class Caesar {
             Pattern stringPattern = Pattern.compile("(,\\s).+(\\.\\s)");
             Matcher m = stringPattern.matcher(innerStringBuilder.toString());
             if (m.find() && innerStringBuilder.toString().contains("the")) {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(target));
-                writer.write(innerStringBuilder.toString());
-                writer.close();
+                writeToFile(innerStringBuilder.toString(),target);
             }
             key++;
         }
