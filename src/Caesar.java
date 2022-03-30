@@ -195,7 +195,7 @@ public class Caesar {
             }
             Pattern stringPattern = Pattern.compile("(,\\s).+(\\.\\s)");
             Matcher m = stringPattern.matcher(innerStringBuilder.toString());
-            if (m.find() && innerStringBuilder.toString().contains("the")) {
+            if (m.find() && innerStringBuilder.toString().contains("after")) {
                 writeToFile(innerStringBuilder.toString(),target);
             }
             key++;
