@@ -189,7 +189,7 @@ public class Caesar {
             }
             Pattern stringPattern = Pattern.compile("(,\\s).+(\\.\\s)");
             Matcher m = stringPattern.matcher(innerStringBuilder.toString());
-            if (m.find() && innerStringBuilder.toString().contains("horror")) {
+            if (m.find() && innerStringBuilder.toString().contains("the")) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(target));
                 writer.write(innerStringBuilder.toString());
                 writer.close();
